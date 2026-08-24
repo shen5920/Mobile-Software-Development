@@ -1,0 +1,9 @@
+<!--index.wxml-->
+<navigation-bar title="test" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view class="container">
+    <view wx:if="{{showTip}}" class="tip-text">胖宝宝 你给我回来！</view>
+    <image mode="widthFix" src="{{imgSrc}}"></image>
+    <button bindtap="handleBtnClick">{{btnText}}</button>
+  </view>
+</scroll-view>
