@@ -1,0 +1,35 @@
+<!--index.wxml-->
+<scroll-view class="scrollarea" scroll-y>
+  <view class="container">
+    <image mode="widthFix" src="/img/szn.png"></image>
+
+    <view class="intro-card">
+      <view class="card-title">
+        <view class="title-bar"></view>
+        <text>个人简介</text>
+      </view>
+
+      <view class="tag-group">
+        <view class="tag">软件工程专业 · 本科</view>
+        <view class="tag">中共预备党员</view>
+        <view class="tag">班级团支书</view>
+      </view>
+
+      <view class="intro-text">
+        沈卓娜，就读于中国海洋大学信息科学与工程学部软件工程专业，入学以来始终秉持扎实笃行的态度，在学业、学生工作与思想层面同步精进。
+      </view>
+      <view class="intro-text">
+        专业学习上，深耕编程语言、数据结构、系统开发等核心内容，主动拓展技术视野，重视实践能力打磨，稳步筑牢专业根基。
+      </view>
+      <view class="intro-text">
+        学生工作中，立足团支书岗位，统筹团务管理、主题团日与班级思想建设，在服务集体的过程中提升组织协调能力，发挥先锋模范作用。
+      </view>
+
+      <view class="motto">
+        <text class="motto-text">“海纳百川，取则行远”</text>
+        <text class="motto-desc">—— 成长标尺，笃行不怠</text>
+      </view>
+    </view>
+
+  </view>
+</scroll-view>
