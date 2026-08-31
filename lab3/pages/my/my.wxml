@@ -1,0 +1,26 @@
+<!--pages/my/my.wxml-->
+<!-- 登陆页面 -->
+<view class="myLogin">
+  <block wx:if="{{isLogin}}">
+    <image class="avatar" src="{{src}}"></image>
+    <text class="nickname">{{nickName}}</text>
+  </block>
+  <block wx:else>
+    <view class="avatar avatar--placeholder">👤</view>
+    <button class="login-btn" bindtap="getUserInfo">未登录，点此登录</button>
+  </block>
+</view>
+<!-- 收藏列表 -->
+<view class="myFavorite">
+  <view class="section-title">我的收藏（{{number}}）</view>
+  <view class="news-list">
+    <view class="news-item" wx:for="{{newsList}}" wx:key="{{item.id}}" bindtap="goToDetail" data-id="{{item.id}}">
+      <image src="{{item.poster}}" mode="aspectFill"></image>
+      <view class="news-info">
+        <text class="news-title">{{item.title}}</text>
+        <text class="news-date">{{item.add_date}}</text>
+      </view>
+    </view>
+    <view class="empty" wx:if="{{number == 0}}">暂无收藏内容</view>
+  </view>
+</view>

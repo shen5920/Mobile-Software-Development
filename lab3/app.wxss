@@ -1,0 +1,52 @@
+/**app.wxss**/
+page {
+  background: #f5f6f8;
+}
+
+/* 新闻列表（首页与个人中心共用） */
+.news-list {
+  padding: 20rpx;
+}
+
+.news-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #ffffff;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(50, 142, 235, 0.06);
+}
+
+.news-item image {
+  width: 200rpx;
+  height: 140rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: #f0f0f0;
+}
+
+.news-info {
+  flex: 1;
+  height: 140rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.news-title {
+  font-size: 30rpx;
+  line-height: 40rpx;
+  color: #333333;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.news-date {
+  font-size: 24rpx;
+  color: #999999;
+}
