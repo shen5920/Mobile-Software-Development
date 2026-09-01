@@ -5,7 +5,7 @@ $ImagesDir = Join-Path $ProjectRoot "images"
 
 $TimeStamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $ParentDir = Split-Path $ProjectRoot -Parent
-$BackupDir = Join-Path $ParentDir ("AT3_image_backup_" + $TimeStamp)
+$BackupDir = Join-Path $ParentDir ("lab3_image_backup_" + $TimeStamp)
 
 $ProtectedFiles = @(
     "index.png",
@@ -16,7 +16,7 @@ $ProtectedFiles = @(
 
 Write-Host ""
 Write-Host "========================================"
-Write-Host " AT3 image optimizer"
+Write-Host " lab3 image optimizer"
 Write-Host "========================================"
 Write-Host ""
 Write-Host "Project:"
