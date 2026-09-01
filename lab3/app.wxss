@@ -30,7 +30,7 @@ page {
 .news-info {
   flex: 1;
   height: 140rpx;
-  margin-left: 20rpx;
+  margin-right: 20rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -49,4 +49,23 @@ page {
 .news-date {
   font-size: 24rpx;
   color: #999999;
+}
+
+.news-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.like-btn {
+  font-size: 24rpx;
+  color: #999999;
+  padding: 4rpx 20rpx;
+  border-radius: 20rpx;
+  background: #f5f6f8;
+}
+
+.like-btn--active {
+  color: #fa5151;
+  background: #fde8e8;
 }

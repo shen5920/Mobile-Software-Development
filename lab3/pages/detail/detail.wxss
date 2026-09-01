@@ -84,13 +84,19 @@ page {
   margin-top: 10rpx;
 }
 
-/* 收藏按钮 */
+/* 收藏/点赞按钮 */
+.action-bar {
+  display: flex;
+  margin-top: 48rpx;
+  padding-bottom: 40rpx;
+}
+
 .fav-btn {
-  width: 500rpx;
+  flex: 1;
   height: 88rpx;
   line-height: 88rpx;
   text-align: center;
-  margin: 48rpx auto 20rpx;
+  margin: 0 12rpx;
   border-radius: 44rpx;
   font-size: 32rpx;
   font-weight: 600;

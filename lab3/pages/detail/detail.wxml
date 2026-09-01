@@ -2,7 +2,7 @@
 <view class="container">
   <view class="title">{{article.title}}</view>
   <view class="meta">作者：{{article.author}}　来源：{{article.source}}　发布时间：{{article.add_date}}</view>
-  <view class="poster">
+  <view class="poster" wx:if="{{article.poster}}">
     <image src="{{article.poster}}" mode="widthFix"></image>
   </view>
   <view class="content">
@@ -17,6 +17,8 @@
   <view class="wen-tu">{{article.wenTu}}</view>
   <view class="editor">{{article.editor}}</view>
   <view class="resp-editor">{{article.respEditor}}</view>
-  <button class="fav-btn fav-btn--active" wx:if="{{isAdd}}" bindtap="cancelFavorites">❤️ 已收藏</button>
-  <button class="fav-btn" wx:else bindtap="addFavorites">❤️ 收藏</button>
+  <view class="action-bar">
+    <button class="fav-btn {{isAdd ? 'fav-btn--active' : ''}}" bindtap="toggleFavorites">{{isAdd ? '已收藏' : '收藏'}}</button>
+    <button class="fav-btn {{isLike ? 'fav-btn--active' : ''}}" bindtap="toggleLike">{{isLike ? '已点赞' : '点赞'}}</button>
+  </view>
 </view>

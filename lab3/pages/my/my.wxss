@@ -24,8 +24,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #ffffff;
-  font-size: 70rpx;
 }
 
 .nickname {
@@ -52,17 +50,211 @@
   border: none;
 }
 
-/* 收藏列表 */
-.section-title {
-  font-size: 30rpx;
-  font-weight: bold;
-  color: #333333;
-  padding: 24rpx 20rpx 0;
+.logout-btn {
+  margin-top: 24rpx;
+  width: 240rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  font-size: 26rpx;
+  padding: 0;
+  border: 2rpx solid rgba(255, 255, 255, 0.6);
 }
 
+.logout-btn::after {
+  border: none;
+}
+
+/* 列表标签 */
+.list-tabs {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.list-tab {
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #666666;
+  position: relative;
+}
+
+.list-tab--active {
+  color: #328EEB;
+  font-weight: bold;
+}
+
+.list-tab--active::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 6rpx;
+  width: 40rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  background: #328EEB;
+}
+
+/* 左滑删除 */
+.swipe-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.swipe-item .news-item {
+  margin-bottom: 0;
+}
+
+.swipe-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 160rpx;
+  background: #fa5151;
+  color: #ffffff;
+  font-size: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 16rpx 16rpx 0;
+}
+
+.swipe-content {
+  transition: transform 0.2s;
+}
+
+/* 空状态 */
 .empty {
   text-align: center;
   color: #999999;
   font-size: 26rpx;
   padding: 80rpx 0;
+}
+
+/* 登录弹框 */
+.modal-mask {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 560rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 48rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.modal-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #222222;
+}
+
+.modal-desc {
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 12rpx;
+  text-align: center;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 160rpx;
+  height: 160rpx;
+  margin-top: 32rpx;
+}
+
+.avatar-preview {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f5f6f8;
+  box-shadow: 0 0 0 4rpx #e0e0e0;
+  display: block;
+}
+
+.avatar-preview--empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999999;
+  font-size: 24rpx;
+}
+
+.avatar-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  opacity: 0;
+}
+
+.avatar-picker::after {
+  border: none;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 80rpx;
+  margin-top: 28rpx;
+  border-bottom: 2rpx solid #e0e0e0;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.modal-btns {
+  display: flex;
+  width: 100%;
+  margin-top: 44rpx;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  font-size: 30rpx;
+  padding: 0;
+}
+
+.modal-btn::after {
+  border: none;
+}
+
+.modal-btn--cancel {
+  background: #f5f6f8;
+  color: #666666;
+  margin-right: 20rpx;
+}
+
+.modal-btn--confirm {
+  background: linear-gradient(135deg, #4a94e6 0%, #328EEB 100%);
+  color: #ffffff;
 }
