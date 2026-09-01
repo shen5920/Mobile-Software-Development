@@ -1,0 +1,30 @@
+<view class='container'>
+  <!-- 页面标题 -->
+  <view class='title-area'>
+    <view class='title'>游戏选关</view>
+    <text class='subtitle'>通关后自动解锁下一关</text>
+  </view>
+
+  <!-- 关卡列表 -->
+  <view class='levelBox'>
+    <view 
+      class='box' 
+      wx:for='{{levels}}' 
+      wx:key='num'
+      bindtap='chooseLevel'
+      data-level='{{index}}'
+      hover-class='box-hover'
+    >
+      <view class='box-card'>
+        <view class='box-img-wrap'>
+          <image src='{{item.src}}'></image>
+          <!-- 通关标记 -->
+          <view wx:if='{{item.done}}' class='done-mark'>✓</view>
+          <!-- 锁定遮罩 -->
+          <view wx:if='{{item.locked}}' class='lock-mask'>🔒</view>
+        </view>
+        <text class='level-tag'>第{{item.num}}关</text>
+      </view>
+    </view>
+  </view>
+</view>

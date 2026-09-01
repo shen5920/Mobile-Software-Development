@@ -1,0 +1,59 @@
+<view class='container'>
+  <!-- 关卡标题徽章（带难度模式） -->
+  <view class='level-title'>第{{level}}关 · {{mode === 'hard' ? '困难' : '简单'}}</view>
+
+  <!-- 信息栏：步数 / 最佳 / 已用时间（困难模式额外显示剩余倒计时） -->
+  <view class='info-bar'>
+    <text>步数：{{steps}}</text>
+    <text>最佳：{{bestStep}}</text>
+    <text>已用：{{timeText}}</text>
+    <text wx:if='{{mode === "hard"}}' class='countdown-text {{countdown <= 10 ? "countdown-danger" : ""}}'>剩余：{{countdown}}秒</text>
+  </view>
+
+  <!-- 游戏画布（支持滑动和点击相邻格子操作；弹窗打开时不渲染，避免原生 canvas 盖住弹窗） -->
+  <canvas wx:if='{{!showModeModal}}' canvas-id='myCanvas' bindtouchstart='touchStart' bindtouchend='touchEnd'></canvas>
+  <text class='tip'>提示：滑动或点击相邻格子移动</text>
+
+  <!-- 方向控制键 -->
+  <view class='btnBox'>
+    <button class='ctrl-btn' bindtap='moveUp' disabled='{{replaying}}'>上</button>
+    <view>
+      <button class='ctrl-btn' bindtap='moveLeft' disabled='{{replaying}}'>左</button>
+      <button class='ctrl-btn' bindtap='moveDown' disabled='{{replaying}}'>下</button>
+      <button class='ctrl-btn' bindtap='moveRight' disabled='{{replaying}}'>右</button>
+    </view>
+  </view>
+
+  <!-- 操作栏：撤销 / 重玩 / 分享 / 返回首页 -->
+  <view class='action-bar'>
+    <button class='act-btn act-btn--undo' bindtap='undoStep' disabled='{{mode === "hard" || replaying}}'>撤销</button>
+    <button class='act-btn act-btn--restart' bindtap='restartGame' disabled='{{replaying}}'>重玩</button>
+    <button class='act-btn act-btn--share' open-type='share'>分享</button>
+    <button class='act-btn act-btn--home' bindtap='goHome'>首页</button>
+  </view>
+
+  <!-- 难度模式选择弹窗（进入关卡后、游戏开始前） -->
+  <view class='modal-mask' wx:if='{{showModeModal}}'>
+    <view class='modal'>
+      <view class='modal-title'>请选择本关难度模式</view>
+      <view class='modal-desc'>第{{level}}关 · 困难模式限时 {{timeLimit}} 秒</view>
+      <radio-group bindchange='onModeSelect'>
+        <label class='modal-mode {{mode === "easy" ? "modal-mode--active" : ""}}'>
+          <radio value='easy' checked='{{mode === "easy"}}' color='#E64340'/>
+          <view class='modal-mode-text'>
+            <text class='modal-mode-name'>简单模式</text>
+            <text class='modal-mode-sub'>计时不限时，支持撤销悔棋</text>
+          </view>
+        </label>
+        <label class='modal-mode {{mode === "hard" ? "modal-mode--active" : ""}}'>
+          <radio value='hard' checked='{{mode === "hard"}}' color='#E64340'/>
+          <view class='modal-mode-text'>
+            <text class='modal-mode-name'>困难模式</text>
+            <text class='modal-mode-sub'>限时 {{timeLimit}} 秒，禁止撤销</text>
+          </view>
+        </label>
+      </radio-group>
+      <button class='modal-start' bindtap='startGame'>开始游戏</button>
+    </view>
+  </view>
+</view>
