@@ -114,10 +114,10 @@ Mobile-Software-Development/
 
 ## 实验报告
 
-- [实验1 报告](实验1.md)
-- [实验2 报告](实验2.md)
-- [实验3 报告](实验3.md)
-- [实验4 报告](实验4.md)
-- [实验5 报告](实验5.md)
+- [实验1 报告](实验1.md) · [CSDN 博客](https://blog.csdn.net/natiedog/article/details/164065143)
+- [实验2 报告](实验2.md) · [CSDN 博客](https://blog.csdn.net/natiedog/article/details/164095360)
+- [实验3 报告](实验3.md) · [CSDN 博客](https://blog.csdn.net/natiedog/article/details/164222749)
+- [实验4 报告](实验4.md) · [CSDN 博客](https://blog.csdn.net/natiedog/article/details/164256927)
+- [实验5 报告](实验5.md) · [CSDN 博客](https://blog.csdn.net/natiedog/article/details/164507205)
 
-各实验报告包含实验目的、项目创建与目录结构、视图设计、逻辑实现、运行效果截图以及问题总结与体会。
+各实验报告包含实验目的、项目创建与目录结构、视图设计、逻辑实现、运行效果截图以及问题总结与体会；完整实验过程见对应 CSDN 博客。
