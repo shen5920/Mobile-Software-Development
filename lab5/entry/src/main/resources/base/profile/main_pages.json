@@ -1,0 +1,10 @@
+{
+  "src": [
+    "pages/HomePage",
+    "pages/ConvertPage",
+    "pages/HistoryPage",
+    "pages/OtherPage",
+    "pages/DrawPage",
+    "pages/DateCalcPage"
+  ]
+}
