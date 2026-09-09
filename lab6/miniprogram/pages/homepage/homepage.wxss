@@ -1,0 +1,124 @@
+/* ===== 个人主页头部 ===== */
+.profile-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+  background: linear-gradient(180deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: 24rpx;
+}
+
+.profile-avatar {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  box-shadow: 0 8rpx 30rpx rgba(102, 126, 234, 0.3);
+}
+
+.profile-avatar.letter-avatar {
+  font-size: 72rpx;
+}
+
+.avatar-ring {
+  position: absolute;
+  top: -8rpx;
+  left: -8rpx;
+  right: -8rpx;
+  bottom: -8rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #f093fb, #667eea);
+  background-size: 200% 200%;
+  animation: ringRotate 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes ringRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.profile-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 8rpx;
+}
+
+.profile-location {
+  font-size: 26rpx;
+  color: #a0aec0;
+  margin-bottom: 30rpx;
+}
+
+/* 统计信息 */
+.profile-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.1);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30rpx;
+}
+
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #a0aec0;
+  margin-top: 4rpx;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 50rpx;
+  background: #e2e8f0;
+}
+
+.profile-mine-tip {
+  margin-top: 20rpx;
+  padding: 8rpx 28rpx;
+  border-radius: 30rpx;
+  font-size: 22rpx;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+/* ===== 删除按钮(本人主页可见) ===== */
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 0 8rpx 20rpx;
+  font-size: 24rpx;
+  color: #cbd5e0;
+  transition: color 0.2s;
+}
+
+.delete-btn:active {
+  color: #f5576c;
+  transform: scale(0.92);
+}

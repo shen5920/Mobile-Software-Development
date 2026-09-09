@@ -1,0 +1,120 @@
+﻿<view class="container">
+  <!-- ===== 开屏动画: 相机对焦 → 咔嚓 → 白闪淡出, 揭示真实首页 ===== -->
+  <view class="splash" wx:if="{{splashScene}}" catchtap="skipSplash" catchtouchmove="splashNoop">
+    <view class="splash-deco deco-a"></view>
+    <view class="splash-deco deco-b"></view>
+
+    <view class="splash-stage">
+      <view class="splash-cam">
+        <view class="cam-shake">
+          <view class="cam-hump"></view>
+          <view class="cam-body">
+            <view class="cam-flash"></view>
+            <view class="cam-lens">
+              <view class="cam-glass"></view>
+            </view>
+            <view class="cam-light"></view>
+          </view>
+        </view>
+      </view>
+      <view class="splash-brand">
+        <text class="brand-name">光影集</text>
+        <text class="brand-slogan">发现美好瞬间</text>
+      </view>
+    </view>
+
+    <view class="splash-skip-hint">轻触屏幕可跳过</view>
+  </view>
+
+  <!-- 白闪层独立于场景层: 场景在全白时刻撤下, 之后白层独自淡出, 底下即真实首页 -->
+  <view class="flash-white" wx:if="{{splashOn}}"></view>
+
+  <!-- 顶部欢迎条 -->
+  <view class="welcome-bar">
+    <view class="welcome-text">
+      <text class="welcome-title">发现美好瞬间</text>
+      <text class="welcome-sub" wx:if="{{loading}}">正在加载光影记忆…</text>
+      <text class="welcome-sub" wx:elif="{{photoList.length === 0}}">还没有光影记忆, 快来分享第一份吧</text>
+      <text class="welcome-sub" wx:else>共 {{photoList.length}} 份光影记忆</text>
+    </view>
+    <view class="welcome-icon">📸</view>
+  </view>
+
+  <!-- 骨架屏(仅首次加载显示) -->
+  <block wx:if="{{loading}}">
+    <view class="skeleton-card" wx:for="{{[1,2,3]}}" wx:key="*this">
+      <view style="display:flex;align-items:center;">
+        <view class="skeleton-avatar"></view>
+        <view style="flex:1;">
+          <view class="skeleton-line" style="width:200rpx;"></view>
+          <view class="skeleton-line" style="width:140rpx;height:18rpx;"></view>
+        </view>
+      </view>
+      <view class="skeleton-image"></view>
+      <view class="skeleton-line" style="width:80%;"></view>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:elif="{{photoList.length === 0}}">
+    <text class="empty-icon">📷</text>
+    <text class="empty-text">还没有图片分享</text>
+    <text class="empty-subtext">点击右下角按钮上传第一张吧</text>
+  </view>
+
+  <!-- 照片卡片列表 -->
+  <block wx:for="{{photoList}}" wx:key="_id">
+    <view class="card fade-in-up" style="animation-delay:{{index * 0.05}}s;">
+      <view class="card-head">
+        <view class="author-tap" hover-class="none" bindtap="openProfile"
+              data-id="{{item._openid}}" data-name="{{item.nickName}}"
+              data-avatar="{{item.avatarUrl}}" data-province="{{item.province}}"
+              data-country="{{item.country}}">
+          <image wx:if="{{item.avatarUrl}}" class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+          <view wx:else class="avatar letter-avatar" style="background:{{item.avatarBg}};">{{item.letter}}</view>
+          <view class="title">
+            <text class="nickName">{{item.nickName}}</text>
+            <text class="address" wx:if="{{item.address}}">来自 {{item.address}}</text>
+          </view>
+        </view>
+        <view class="delete-btn" wx:if="{{item._openid === openid}}" hover-class="none"
+              bindtap="deletePhoto" data-id="{{item._id}}" data-index="{{index}}">
+          <text>删除</text>
+        </view>
+      </view>
+
+      <view class="card-body">
+        <navigator url="{{item.detailUrl}}" hover-class="none">
+          <image src="{{item.photoUrl}}" mode="widthFix" lazy-load="{{true}}"></image>
+        </navigator>
+      </view>
+
+      <view class="photo-desc" wx:if="{{item.description}}">
+        <text>{{item.description}}</text>
+      </view>
+
+      <view class="card-foot">
+        <text class="date">{{item.displayTime}}</text>
+        <view class="like-area" hover-class="none"
+              bindtap="toggleLike" data-id="{{item._id}}" data-index="{{index}}">
+          <text class="like-btn {{item.liked ? 'heart-pop' : ''}}">{{item.liked ? '❤️' : '🤍'}}</text>
+          <text class="like-count {{item.liked ? 'liked' : ''}}">{{item.likes}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 列表底部状态 -->
+  <view class="list-footer" wx:if="{{!loading && photoList.length > 0}}">
+    <text wx:if="{{noMore}}">— 已经到底啦, 没有更多光影了 —</text>
+    <text wx:else>{{loadingMore ? '加载中…' : '上拉加载更多'}}</text>
+  </view>
+</view>
+
+<!-- 浮动上传按钮 -->
+<view class="floatBtn">
+  <button hover-class="none" bindtap="goToAdd">
+    <text class="fab-plus">＋</text>
+    <text>上传</text>
+  </button>
+</view>

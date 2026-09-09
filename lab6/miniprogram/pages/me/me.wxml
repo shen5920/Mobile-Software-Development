@@ -1,0 +1,160 @@
+<view class="container">
+  <!-- ===== 登录 / 编辑资料卡(未登录或编辑中显示, 即原来的"我的名片"设计) ===== -->
+  <view class="login-card" wx:if="{{!loggedIn || editing}}">
+    <view class="login-head">
+      <text class="login-title">{{editing ? '编辑资料' : '登录光影集'}}</text>
+      <text class="login-sub">{{editing ? '修改头像或昵称后保存即可' : '设置头像与昵称, 登录后就能发布你的光影瞬间'}}</text>
+    </view>
+    <view class="login-body">
+      <button class="avatar-pick" hover-class="none" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">
+        <image wx:if="{{avatarSrc}}" class="pick-avatar" src="{{avatarSrc}}" mode="aspectFill"></image>
+        <view wx:else class="pick-avatar letter-avatar" style="background:{{loginBg}};">{{loginLetter}}</view>
+        <text class="pick-hint">点击选择头像</text>
+      </button>
+      <view class="profile-fields">
+        <input
+          class="nick-input"
+          type="nickname"
+          placeholder="输入昵称"
+          placeholder-class="nick-placeholder"
+          value="{{loginNick}}"
+          bindinput="onNickInput"
+          maxlength="20"
+        />
+        <button class="save-profile-btn" hover-class="none" bindtap="saveProfile">
+          {{editing ? '保存修改' : '登 录'}}
+        </button>
+      </view>
+    </view>
+    <view class="login-cancel" wx:if="{{editing}}" hover-class="none" bindtap="cancelEdit">取消</view>
+  </view>
+
+  <!-- ===== 已登录: 我的主页 ===== -->
+  <block wx:else>
+    <!-- 顶部个人信息区 -->
+    <view class="profile-header">
+      <view class="profile-avatar-wrap">
+        <image wx:if="{{profile.avatarUrl}}" class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="profile-avatar letter-avatar" style="background:{{profile.avatarBg}};">{{profile.letter}}</view>
+        <view class="avatar-ring"></view>
+      </view>
+      <text class="profile-name">{{profile.nickName}}</text>
+      <text class="profile-location" wx:if="{{profile.address}}">来自 {{profile.address}}</text>
+
+      <view class="profile-stats">
+        <view class="stat-item">
+          <text class="stat-num">{{works}}</text>
+          <text class="stat-label">作品</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-num">{{totalLikes}}</text>
+          <text class="stat-label">获赞</text>
+        </view>
+      </view>
+
+      <view class="profile-links">
+        <view class="edit-link" hover-class="none" bindtap="startEdit">✏️ 编辑资料</view>
+        <view class="logout-link" hover-class="none" bindtap="doLogout">退出登录</view>
+      </view>
+    </view>
+
+    <!-- 分段: 我的作品 / 我的点赞 -->
+    <view class="seg-bar">
+      <view class="seg-item {{activeTab === 'works' ? 'active' : ''}}" hover-class="none"
+            bindtap="switchTab" data-tab="works">作品 {{works}}</view>
+      <view class="seg-item {{activeTab === 'likes' ? 'active' : ''}}" hover-class="none"
+            bindtap="switchTab" data-tab="likes">点赞 {{likedTotal}}</view>
+    </view>
+
+    <!-- ===== 我的作品 ===== -->
+    <block wx:if="{{activeTab === 'works'}}">
+      <!-- 加载中骨架 -->
+      <view class="skeleton-card" wx:if="{{loading}}" style="margin-top:40rpx;">
+        <view style="display:flex;flex-direction:column;align-items:center;padding:40rpx 0;">
+          <view class="skeleton-avatar" style="width:160rpx;height:160rpx;"></view>
+          <view class="skeleton-line" style="width:200rpx;margin-top:20rpx;"></view>
+          <view class="skeleton-line" style="width:140rpx;height:18rpx;"></view>
+        </view>
+        <view class="skeleton-image"></view>
+      </view>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:if="{{loaded && !loading && photoList.length === 0}}">
+        <text class="empty-icon">🎞️</text>
+        <text class="empty-text">还没有发布过作品</text>
+        <text class="empty-subtext">去首页点击右下角上传, 分享你的第一份光影吧</text>
+      </view>
+
+      <!-- 我的作品卡片列表 -->
+      <block wx:for="{{photoList}}" wx:key="_id">
+        <view class="card fade-in-up" style="animation-delay:{{index * 0.05}}s;">
+          <view class="card-head">
+            <image wx:if="{{item.avatarUrl}}" class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="avatar letter-avatar" style="background:{{item.avatarBg}};">{{item.letter}}</view>
+            <view class="title">
+              <text class="nickName">{{item.nickName}}</text>
+              <text class="address" wx:if="{{item.address}}">来自 {{item.address}}</text>
+            </view>
+            <view class="delete-btn" hover-class="none"
+                  bindtap="deletePhoto" data-id="{{item._id}}" data-index="{{index}}">
+              <text>删除</text>
+            </view>
+          </view>
+
+          <view class="card-body">
+            <navigator url="{{item.detailUrl}}" hover-class="none">
+              <image src="{{item.photoUrl}}" mode="widthFix" lazy-load="{{true}}"></image>
+            </navigator>
+          </view>
+
+          <view class="photo-desc" wx:if="{{item.description}}">
+            <text>{{item.description}}</text>
+          </view>
+
+          <view class="card-foot">
+            <text class="date">{{item.displayTime}}</text>
+            <view class="like-area">
+              <text class="like-btn">❤️</text>
+              <text class="like-count liked">{{item.likes}}</text>
+            </view>
+          </view>
+        </view>
+      </block>
+
+      <!-- 列表底部状态 -->
+      <view class="list-footer" wx:if="{{!loading && photoList.length > 0}}">
+        <text wx:if="{{noMore}}">— 已经到底啦 —</text>
+        <text wx:else>{{loadingMore ? '加载中…' : '上拉加载更多'}}</text>
+      </view>
+    </block>
+
+    <!-- ===== 我的点赞 ===== -->
+    <block wx:elif="{{activeTab === 'likes'}}">
+      <!-- 点赞墙加载中 -->
+      <view class="list-footer" wx:if="{{likedLoading}}">点赞加载中…</view>
+
+      <!-- 点赞墙 -->
+      <view class="like-grid" wx:if="{{likedLoaded && likedList.length > 0}}">
+        <view class="like-item" wx:for="{{likedList}}" wx:key="_id" hover-class="none"
+              bindtap="openLikedDetail" data-id="{{item._id}}">
+          <image class="like-thumb" src="{{item.photoUrl}}" mode="aspectFill" lazy-load="{{true}}"></image>
+          <view class="like-badge">❤️ {{item.likes}}</view>
+        </view>
+      </view>
+
+      <!-- 点赞空状态 -->
+      <view class="empty-state" wx:if="{{likedLoaded && likedList.length === 0 && !likedLoading}}">
+        <text class="empty-icon">🤍</text>
+        <text class="empty-text">还没有点赞过作品</text>
+        <text class="empty-subtext">去首页双击图片, 给喜欢的光影点个赞吧</text>
+      </view>
+
+      <!-- 点赞底部状态 -->
+      <view class="list-footer" wx:if="{{likedLoaded && likedList.length > 0}}">
+        <text wx:if="{{likedNoMore}}">— 已经到底啦 —</text>
+        <text wx:else>{{likedLoadingMore ? '加载中…' : '上拉加载更多'}}</text>
+      </view>
+    </block>
+  </block>
+</view>

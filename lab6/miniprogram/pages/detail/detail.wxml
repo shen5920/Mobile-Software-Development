@@ -1,0 +1,108 @@
+﻿<view class="detail-container">
+  <!-- 加载中骨架 -->
+  <view class="detail-loading" wx:if="{{!photo}}">
+    <view class="skeleton-image" style="width:100%;height:600rpx;border-radius:0;"></view>
+  </view>
+
+  <block wx:if="{{photo}}">
+    <!-- 作者信息栏(点击进入 TA 的主页) -->
+    <navigator url="{{photo.homeUrl}}" hover-class="none">
+      <view class="detail-author">
+        <image wx:if="{{photo.avatarUrl}}" class="detail-avatar" src="{{photo.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="detail-avatar letter-avatar detail-avatar-letter" style="background:{{photo.avatarBg}};">{{photo.letter}}</view>
+        <view class="detail-author-info">
+          <text class="detail-nickname">{{photo.nickName}}</text>
+          <text class="detail-address" wx:if="{{photo.address}}">来自 {{photo.address}}</text>
+        </view>
+        <view class="detail-meta">
+          <text class="detail-date">{{photo.displayTime}}</text>
+          <text class="detail-views">👁 {{photo.views}}</text>
+        </view>
+      </view>
+    </navigator>
+
+    <!-- 大图展示(双击点赞, 长按保存/预览) -->
+    <view class="detail-image-wrap" bindtap="onImageTap" bindlongpress="onLongPress">
+      <image class="detail-image" src="{{photo.photoUrl}}" mode="widthFix"></image>
+      <view class="heart-animation" wx:if="{{showHeart}}">❤️</view>
+    </view>
+
+    <!-- 图片描述 -->
+    <view class="detail-desc" wx:if="{{photo.description}}">
+      <text class="desc-icon">💬</text>
+      <text class="desc-text">{{photo.description}}</text>
+    </view>
+
+    <!-- 点赞栏 -->
+    <view class="detail-like-bar">
+      <view class="like-stat {{liked ? 'liked' : ''}}" hover-class="none" bindtap="toggleLike">
+        <text class="like-icon {{liked ? 'heart-pop' : ''}}">{{liked ? '❤️' : '🤍'}}</text>
+        <text class="like-text">{{photo.likes}} 人觉得很赞</text>
+      </view>
+    </view>
+
+    <!-- 操作按钮区 - 毛玻璃 -->
+    <view class="detail-actions">
+      <button class="action-btn" hover-class="none" bindtap="downloadPhoto">
+        <text class="action-icon">💾</text>
+        <text class="action-text">保存相册</text>
+      </button>
+      <button class="action-btn" hover-class="none" open-type="share">
+        <text class="action-icon">📤</text>
+        <text class="action-text">分享好友</text>
+      </button>
+      <button class="action-btn" hover-class="none" bindtap="previewPhoto">
+        <text class="action-icon">🔍</text>
+        <text class="action-text">全屏查看</text>
+      </button>
+      <button class="action-btn action-delete" wx:if="{{photo._openid === openid}}" hover-class="none" bindtap="deletePhoto">
+        <text class="action-icon">🗑️</text>
+        <text class="action-text">删除</text>
+      </button>
+    </view>
+
+    <!-- ===== 评论区 ===== -->
+    <view class="comment-section">
+      <view class="comment-head">
+        <text class="comment-title">评论</text>
+        <text class="comment-count">{{commentTotal}} 条</text>
+      </view>
+
+      <!-- 评论列表 -->
+      <view class="comment-item" wx:for="{{comments}}" wx:key="_id">
+        <image wx:if="{{item.avatarUrl}}" class="comment-avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="comment-avatar letter-avatar" style="background:{{item.avatarBg}};">{{item.letter}}</view>
+        <view class="comment-main">
+          <view class="comment-top">
+            <text class="comment-name">{{item.nickName}}</text>
+            <text class="comment-time">{{item.timeText}}</text>
+          </view>
+          <text class="comment-content">{{item.content}}</text>
+        </view>
+        <view class="comment-del" wx:if="{{item.mine}}" hover-class="none"
+              bindtap="deleteComment" data-id="{{item._id}}">删除</view>
+      </view>
+
+      <view class="comment-empty" wx:if="{{!loadingComments && comments.length === 0}}">
+        <text class="comment-empty-icon">💬</text>
+        <text>还没有评论, 快来抢沙发~</text>
+      </view>
+      <view class="comment-loading" wx:if="{{loadingComments}}">评论加载中…</view>
+    </view>
+  </block>
+
+  <!-- 底部评论输入条 -->
+  <view class="comment-bar" wx:if="{{photo}}">
+    <input
+      class="comment-input"
+      placeholder="说点什么…"
+      placeholder-class="comment-input-ph"
+      value="{{draft}}"
+      bindinput="onDraftInput"
+      bindconfirm="sendComment"
+      confirm-type="send"
+      maxlength="100"
+    />
+    <view class="comment-send {{canSend ? '' : 'disabled'}}" hover-class="none" bindtap="sendComment">发送</view>
+  </view>
+</view>

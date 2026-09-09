@@ -1,0 +1,85 @@
+﻿<view class="container">
+  <!-- ===== 顶部个人信息区 ===== -->
+  <view class="profile-header" wx:if="{{profile}}">
+    <view class="profile-avatar-wrap">
+      <image wx:if="{{profile.avatarUrl}}" class="profile-avatar" src="{{profile.avatarUrl}}" mode="aspectFill"></image>
+      <view wx:else class="profile-avatar letter-avatar" style="background:{{profile.avatarBg}};">{{profile.letter}}</view>
+      <view class="avatar-ring"></view>
+    </view>
+    <text class="profile-name">{{profile.nickName}}</text>
+    <text class="profile-location" wx:if="{{profile.address}}">来自 {{profile.address}}</text>
+
+    <view class="profile-stats">
+      <view class="stat-item">
+        <text class="stat-num">{{works}}</text>
+        <text class="stat-label">作品</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-num">{{totalLikes}}</text>
+        <text class="stat-label">获赞</text>
+      </view>
+    </view>
+
+    <text class="profile-mine-tip" wx:if="{{mine}}">这是我的主页</text>
+  </view>
+
+  <!-- ===== 加载中骨架 ===== -->
+  <view class="skeleton-card" wx:if="{{loading}}" style="margin-top:40rpx;">
+    <view style="display:flex;flex-direction:column;align-items:center;padding:40rpx 0;">
+      <view class="skeleton-avatar" style="width:160rpx;height:160rpx;"></view>
+      <view class="skeleton-line" style="width:200rpx;margin-top:20rpx;"></view>
+      <view class="skeleton-line" style="width:140rpx;height:18rpx;"></view>
+    </view>
+    <view class="skeleton-image"></view>
+  </view>
+
+  <!-- ===== 空状态 ===== -->
+  <view class="empty-state" wx:if="{{loaded && !loading && photoList.length === 0}}">
+    <text class="empty-icon">🕊️</text>
+    <text class="empty-text">TA 还没有分享作品</text>
+    <text class="empty-subtext">光影记忆正在路上, 敬请期待</text>
+  </view>
+
+  <!-- ===== 卡片列表 ===== -->
+  <block wx:for="{{photoList}}" wx:key="_id">
+    <view class="card fade-in-up" style="animation-delay:{{index * 0.05}}s;">
+      <view class="card-head">
+        <image wx:if="{{item.avatarUrl}}" class="avatar" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="avatar letter-avatar" style="background:{{item.avatarBg}};">{{item.letter}}</view>
+        <view class="title">
+          <text class="nickName">{{item.nickName}}</text>
+          <text class="address" wx:if="{{item.address}}">来自 {{item.address}}</text>
+        </view>
+        <view class="delete-btn" wx:if="{{mine}}" hover-class="none"
+              bindtap="deletePhoto" data-id="{{item._id}}" data-index="{{index}}">
+          <text>删除</text>
+        </view>
+      </view>
+
+      <view class="card-body">
+        <navigator url="{{item.detailUrl}}" hover-class="none">
+          <image src="{{item.photoUrl}}" mode="widthFix" lazy-load="{{true}}"></image>
+        </navigator>
+      </view>
+
+      <view class="photo-desc" wx:if="{{item.description}}">
+        <text>{{item.description}}</text>
+      </view>
+
+      <view class="card-foot">
+        <text class="date">{{item.displayTime}}</text>
+        <view class="like-area">
+          <text class="like-btn">❤️</text>
+          <text class="like-count liked">{{item.likes}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- ===== 列表底部状态 ===== -->
+  <view class="list-footer" wx:if="{{!loading && photoList.length > 0}}">
+    <text wx:if="{{noMore}}">— 已经到底啦 —</text>
+    <text wx:else>{{loadingMore ? '加载中…' : '上拉加载更多'}}</text>
+  </view>
+</view>

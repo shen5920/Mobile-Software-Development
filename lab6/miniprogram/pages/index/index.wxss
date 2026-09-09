@@ -1,0 +1,293 @@
+/* 顶部欢迎条 */
+.welcome-bar {
+  width: 710rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx 0 10rpx;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.welcome-title {
+  font-size: 40rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-sub {
+  font-size: 24rpx;
+  color: #a0aec0;
+  margin-top: 6rpx;
+}
+
+.welcome-icon {
+  font-size: 56rpx;
+  margin-left: 20rpx;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8rpx); }
+}
+
+/* 头像+昵称可点区域 */
+.author-tap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.author-tap:active {
+  opacity: 0.7;
+}
+
+/* 删除按钮 */
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 0 8rpx 20rpx;
+  font-size: 24rpx;
+  color: #cbd5e0;
+  transition: color 0.2s;
+}
+
+.delete-btn:active {
+  color: #f5576c;
+  transform: scale(0.92);
+}
+
+/* ============================================================
+   开屏动画: 相机弹出 → 红灯对焦 → 快门咔嚓(震动) → 白闪 → 淡出揭示首页
+   设计: 所有元素共用 2400ms 动画时长, 关键帧百分比即同一时间轴
+   1% ≈ 24ms   58% ≈ 1392ms(快门, JS 同步发音效)
+   60%~66% 白闪铺满(置顶层)   80%~100% 白层淡出
+   JS 在 1900ms(全白停顿中)撤下场景层, 白层下即真实首页
+   ============================================================ */
+.splash {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(165deg, #4f5fe0 0%, #6e4ec9 52%, #9147b2 100%);
+}
+
+/* 背景光斑 */
+.splash-deco {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 70%);
+}
+.deco-a {
+  width: 620rpx; height: 620rpx;
+  top: -200rpx; right: -170rpx;
+  animation: decoFloat 4s ease-in-out infinite alternate;
+}
+.deco-b {
+  width: 540rpx; height: 540rpx;
+  bottom: -220rpx; left: -180rpx;
+  animation: decoFloat 4s ease-in-out 1.4s infinite alternate;
+}
+@keyframes decoFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(34rpx); }
+}
+
+.splash-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: -60rpx;
+}
+
+/* 相机整体: 弹性弹出 */
+.splash-cam {
+  animation: camPop 2.4s ease both;
+}
+@keyframes camPop {
+  0%   { opacity: 0; transform: scale(0.5); }
+  12%  { opacity: 1; transform: scale(1.1); }
+  18%  { transform: scale(0.96); }
+  23%  { transform: scale(1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* 快门瞬间机身震动(与其它 transform 动画隔离在独立层) */
+.cam-shake {
+  position: relative;
+  width: 340rpx;
+  height: 300rpx;
+  animation: camShake 2.4s linear both;
+}
+@keyframes camShake {
+  0%, 57.5% { transform: translateY(0) scale(1); }
+  59%       { transform: translateY(5rpx) scale(0.992); }
+  60.5%     { transform: translateY(-4rpx) scale(1); }
+  62%       { transform: translateY(3rpx) scale(1.004); }
+  64%, 100% { transform: translateY(0) scale(1); }
+}
+
+/* 取景器凸起(机身覆盖其下部, 形成 DSLR 剪影) */
+.cam-hump {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 160rpx; height: 106rpx;
+  border-radius: 26rpx 26rpx 14rpx 14rpx;
+  background: linear-gradient(180deg, #38415a 0%, #232938 100%);
+  z-index: 1;
+}
+
+/* 机身 */
+.cam-body {
+  position: absolute;
+  top: 56rpx; left: 0;
+  width: 340rpx; height: 210rpx;
+  border-radius: 34rpx;
+  background: linear-gradient(180deg, #2d3548 0%, #1a1f30 100%);
+  box-shadow: 0 26rpx 60rpx rgba(8, 6, 40, 0.45);
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* 顶部闪光灯 */
+.cam-flash {
+  position: absolute;
+  top: 32rpx; left: 34rpx;
+  width: 46rpx; height: 32rpx;
+  border-radius: 8rpx;
+  background: linear-gradient(135deg, #f2f5ff, #b9c6f5);
+  box-shadow: inset 0 2rpx 6rpx rgba(255,255,255,0.7), 0 4rpx 10rpx rgba(0,0,0,0.3);
+}
+
+/* 镜头: 彩色渐变光圈 */
+.cam-lens {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 166rpx; height: 166rpx;
+  border-radius: 50%;
+  border: 10rpx solid transparent;
+  background: linear-gradient(#131828, #131828) padding-box,
+              linear-gradient(135deg, #67e8f9 0%, #a78bfa 48%, #f472b6 100%) border-box;
+  box-shadow: 0 14rpx 32rpx rgba(0, 0, 0, 0.5);
+}
+
+/* 镜片玻璃: 深色反光 */
+.cam-glass {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 130rpx; height: 130rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 26%, #232c49 0%, #0a0e1b 58%, #141b2e 100%);
+  box-shadow: inset 0 0 0 4rpx #05070e, inset 0 12rpx 26rpx rgba(255,255,255,0.08);
+}
+.cam-glass::after {
+  content: '';
+  position: absolute;
+  top: 18rpx; left: 22rpx;
+  width: 34rpx; height: 20rpx;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  transform: rotate(-22deg);
+}
+
+/* 对焦红灯: 闪两下 → 常亮(对焦锁定) → 快门瞬间熄灭 */
+.cam-light {
+  position: absolute;
+  top: 36rpx; right: 36rpx;
+  width: 16rpx; height: 16rpx;
+  border-radius: 50%;
+  background: #ff4d6a;
+  box-shadow: 0 0 14rpx 4rpx rgba(255, 60, 90, 0.55);
+  opacity: 0;
+  animation: lightBlink 2.4s linear both;
+}
+@keyframes lightBlink {
+  0%   { opacity: 0; }
+  16%  { opacity: 0; }
+  18%  { opacity: 1; }
+  21%  { opacity: 0; }
+  24%  { opacity: 1; }
+  27%  { opacity: 0; }
+  30%  { opacity: 1; }
+  57%  { opacity: 1; }
+  59%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* 品牌文字淡入 */
+.splash-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 90rpx;
+  animation: brandPop 2.4s ease both;
+}
+@keyframes brandPop {
+  0%   { opacity: 0; transform: translateY(18rpx); }
+  16%  { opacity: 0; transform: translateY(18rpx); }
+  28%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.brand-name {
+  font-size: 56rpx;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 12rpx;
+  margin-right: -12rpx;
+  text-shadow: 0 6rpx 22rpx rgba(20, 10, 70, 0.35);
+}
+.brand-slogan {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 5rpx;
+  margin-top: 14rpx;
+}
+
+/* 白闪层(页面级, 独立于场景层, 置顶): 快门后瞬间铺满 → 全白停顿 → 缓慢淡出, 揭示真实首页 */
+.flash-white {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #ffffff;
+  opacity: 0;
+  z-index: 1200;
+  pointer-events: none;
+  animation: flashWhite 2.4s linear both;
+}
+@keyframes flashWhite {
+  0%   { opacity: 0; }
+  60%  { opacity: 0; }
+  66%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* 跳过提示 */
+.splash-skip-hint {
+  position: absolute;
+  bottom: 80rpx; left: 0; right: 0;
+  text-align: center;
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 3rpx;
+  z-index: 70;
+  pointer-events: none;
+}

@@ -1,0 +1,350 @@
+/* ===== 登录 / 编辑资料卡 ===== */
+.login-card {
+  width: 710rpx;
+  background: #fff;
+  border-radius: 28rpx;
+  padding: 44rpx 36rpx 36rpx;
+  margin-top: 120rpx;
+  box-shadow: 0 12rpx 40rpx rgba(102, 126, 234, 0.16);
+  box-sizing: border-box;
+  position: relative;
+}
+
+.login-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 36rpx;
+}
+
+.login-title {
+  font-size: 38rpx;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.login-sub {
+  font-size: 24rpx;
+  color: #a0aec0;
+  margin-top: 10rpx;
+  text-align: center;
+}
+
+.login-body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* 头像选择按钮(去掉 button 默认样式) */
+.avatar-pick {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 190rpx;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.avatar-pick::after {
+  border: none;
+}
+
+.pick-avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 4rpx solid transparent;
+  background: linear-gradient(white, white) padding-box,
+              linear-gradient(135deg, #667eea, #f093fb) border-box;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.25);
+}
+
+.pick-avatar.letter-avatar {
+  font-size: 64rpx;
+}
+
+.pick-hint {
+  font-size: 22rpx;
+  color: #a0aec0;
+  margin-top: 12rpx;
+}
+
+/* 昵称 + 登录按钮 */
+.profile-fields {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-left: 30rpx;
+}
+
+.nick-input {
+  background: #f7f8fc;
+  border-radius: 16rpx;
+  padding: 18rpx 24rpx;
+  font-size: 28rpx;
+  color: #2d3748;
+  margin-bottom: 20rpx;
+}
+
+.nick-placeholder {
+  color: #cbd5e0;
+}
+
+.save-profile-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  letter-spacing: 4rpx;
+  padding: 16rpx 0;
+  border: none;
+  box-shadow: 0 8rpx 22rpx rgba(102, 126, 234, 0.35);
+}
+
+.save-profile-btn::after {
+  border: none;
+}
+
+.save-profile-btn:active {
+  opacity: 0.88;
+}
+
+.login-cancel {
+  margin-top: 24rpx;
+  text-align: center;
+  font-size: 26rpx;
+  color: #a0aec0;
+  padding: 10rpx 0;
+}
+
+.login-cancel:active {
+  color: #f5576c;
+}
+
+/* ===== 已登录主页头部 ===== */
+.profile-header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+  background: linear-gradient(180deg, rgba(102, 126, 234, 0.08) 0%, transparent 100%);
+}
+
+.profile-avatar-wrap {
+  position: relative;
+  width: 180rpx;
+  height: 180rpx;
+  margin-bottom: 24rpx;
+}
+
+.profile-avatar {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  box-shadow: 0 8rpx 30rpx rgba(102, 126, 234, 0.3);
+}
+
+.profile-avatar.letter-avatar {
+  font-size: 72rpx;
+}
+
+.avatar-ring {
+  position: absolute;
+  top: -8rpx;
+  left: -8rpx;
+  right: -8rpx;
+  bottom: -8rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #f093fb, #667eea);
+  background-size: 200% 200%;
+  animation: ringRotate 3s linear infinite;
+  z-index: -1;
+}
+
+@keyframes ringRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.profile-name {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 8rpx;
+}
+
+.profile-location {
+  font-size: 26rpx;
+  color: #a0aec0;
+  margin-bottom: 30rpx;
+}
+
+/* 统计信息 */
+.profile-stats {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(102, 126, 234, 0.1);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 30rpx;
+}
+
+.stat-num {
+  font-size: 40rpx;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #a0aec0;
+  margin-top: 4rpx;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 50rpx;
+  background: #e2e8f0;
+}
+
+/* 编辑资料 / 退出登录入口 */
+.profile-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 24rpx;
+  gap: 20rpx;
+}
+
+.edit-link {
+  padding: 10rpx 36rpx;
+  border-radius: 34rpx;
+  font-size: 24rpx;
+  color: #667eea;
+  background: rgba(102, 126, 234, 0.1);
+}
+
+.edit-link:active {
+  opacity: 0.7;
+}
+
+.logout-link {
+  padding: 10rpx 36rpx;
+  border-radius: 34rpx;
+  font-size: 24rpx;
+  color: #f5576c;
+  background: rgba(245, 87, 108, 0.08);
+}
+
+.logout-link:active {
+  opacity: 0.7;
+}
+
+/* ===== 分段: 作品 / 点赞 ===== */
+.seg-bar {
+  display: flex;
+  flex-direction: row;
+  width: 520rpx;
+  margin: 8rpx 0 30rpx;
+  padding: 6rpx;
+  background: #eef0fa;
+  border-radius: 44rpx;
+}
+
+.seg-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 68rpx;
+  border-radius: 38rpx;
+  font-size: 28rpx;
+  color: #718096;
+  transition: all 0.25s ease;
+}
+
+.seg-item.active {
+  color: #fff;
+  font-weight: 600;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  box-shadow: 0 6rpx 18rpx rgba(102, 126, 234, 0.35);
+}
+
+/* ===== 点赞墙(三列缩略图) ===== */
+.like-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  width: 710rpx;
+}
+
+.like-item {
+  position: relative;
+  width: 230rpx;
+  height: 230rpx;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.1);
+}
+
+.like-item:active {
+  transform: scale(0.95);
+}
+
+.like-thumb {
+  width: 100%;
+  height: 100%;
+}
+
+.like-badge {
+  position: absolute;
+  right: 10rpx;
+  bottom: 10rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 24rpx;
+  font-size: 20rpx;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6rpx);
+}
+
+/* ===== 删除按钮 ===== */
+.delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 0 8rpx 20rpx;
+  font-size: 24rpx;
+  color: #cbd5e0;
+  transition: color 0.2s;
+}
+
+.delete-btn:active {
+  color: #f5576c;
+  transform: scale(0.92);
+}

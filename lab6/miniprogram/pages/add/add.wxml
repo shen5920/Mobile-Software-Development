@@ -1,0 +1,86 @@
+﻿<view class="container">
+  <!-- ===== 上传区域卡片 ===== -->
+  <view class="upload-card">
+    <view class="upload-header">
+      <text class="upload-title">分享你的光影瞬间</text>
+      <text class="upload-sub">记录生活中每一个美好时刻</text>
+    </view>
+
+    <!-- 已选图片预览 -->
+    <view class="preview-zone" wx:if="{{selectedImage}}" bindtap="previewSelected">
+      <image class="preview-img" src="{{selectedImage}}" mode="aspectFill"></image>
+      <view class="preview-mask">👆 点击预览</view>
+      <view class="rechoose-btn" catchtap="chooseImage">重新选择</view>
+    </view>
+
+    <!-- 图片描述输入 -->
+    <view class="desc-input-wrap">
+      <textarea
+        class="desc-input"
+        placeholder="说点什么吧, 给这张照片配句话..."
+        placeholder-class="desc-placeholder"
+        value="{{description}}"
+        bindinput="onDescInput"
+        maxlength="100"
+        auto-height
+      />
+      <text class="desc-count">{{description.length}}/100</text>
+    </view>
+
+    <!-- 未选图: 引导选择 -->
+    <button wx:if="{{!selectedImage && !uploading}}" class="upload-btn" hover-class="none" bindtap="chooseImage">
+      📷 选择图片上传
+    </button>
+
+    <!-- 已选图: 发布 -->
+    <button wx:elif="{{!uploading}}" class="upload-btn" hover-class="none" bindtap="publish">
+      ✨ 发布这张照片
+    </button>
+
+    <!-- 上传中 -->
+    <button wx:else class="upload-btn uploading" hover-class="none" disabled>
+      上传中 {{uploadProgress}}%
+    </button>
+
+    <!-- 上传进度条 -->
+    <view class="progress-wrap" wx:if="{{uploading}}">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width:{{uploadProgress}}%;"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 已上传图片历史记录 ===== -->
+  <view class="history-section">
+    <view class="history-header">
+      <text class="history-title">我的作品</text>
+      <text class="history-count">共 {{historyTotal}} 张</text>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{historyPhotos.length === 0 && !loading}}">
+      <text class="empty-icon">🎞️</text>
+      <text class="empty-text">还没有上传过图片</text>
+      <text class="empty-subtext">上传第一张后就会出现在这里</text>
+    </view>
+
+    <!-- 图片九宫格 -->
+    <view class="photo-grid" wx:if="{{historyPhotos.length > 0}}">
+      <view class="photo-item" wx:for="{{historyPhotos}}" wx:key="_id"
+            bindtap="previewHistory" data-url="{{item.photoUrl}}">
+        <image src="{{item.photoUrl}}" mode="aspectFill" class="photo-thumb" lazy-load="{{true}}"></image>
+        <view class="photo-overlay">
+          <text class="photo-date">{{item.label}}</text>
+        </view>
+        <view class="photo-del" hover-class="none"
+              catchtap="deleteHistory" data-id="{{item._id}}" data-index="{{index}}">✕</view>
+      </view>
+    </view>
+
+    <view class="load-more" wx:if="{{historyPhotos.length > 0 && !noMore}}"
+          hover-class="none" bindtap="loadMoreHistory">
+      {{loadingMore ? '加载中…' : '加载更多'}}
+    </view>
+    <view class="list-footer" wx:if="{{noMore && historyPhotos.length > 0}}">— 全部作品都在这啦 —</view>
+  </view>
+</view>

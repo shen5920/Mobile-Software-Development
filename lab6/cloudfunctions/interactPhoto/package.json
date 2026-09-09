@@ -1,0 +1,9 @@
+{
+  "name": "interactPhoto",
+  "version": "1.0.0",
+  "description": "照片互动: 点赞/取消点赞/浏览量/删除/统计",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
